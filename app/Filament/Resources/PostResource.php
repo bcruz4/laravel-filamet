@@ -37,18 +37,20 @@ class PostResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('body')
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('img_url')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('pdf_url')
+                    ->required()
                     ->label('Archivo PDF')
                     ->acceptedFileTypes(['application/pdf'])
                     ->directory('posts-pdfs')
                     ->maxSize(2048), // 2MB
                 Forms\Components\TextInput::make('cite')
+                    ->required()
                     ->label('Cita')
                     ->maxLength(255)
                     ->nullable(),
@@ -71,6 +73,13 @@ class PostResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('img_url')
                     ->searchable(),
+                    
+                Tables\Columns\TextColumn::make('pdf_url')
+                    ->label('Archivo PDF')
+                    ->url(fn($record) => asset('storage/' . $record->pdf_url), true)
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-document'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
