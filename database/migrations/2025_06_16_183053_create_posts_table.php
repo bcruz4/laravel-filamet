@@ -13,16 +13,19 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // usuario que esta creado el post
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('category_id'); // usuario que esta creado el post
-            $table->foreign('category_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories'); // ✅ corrección aquí
+
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique(); // ✅ buena práctica
             $table->text('body');
             $table->string('img_url');
+            $table->string('cite')->nullable();     // ✅ campo nuevo
+            $table->string('pdf_url')->nullable();  // ✅ campo nuevo
             $table->timestamps();
-
         });
     }
 
