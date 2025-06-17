@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('nro_item')->nullable();     // ✅ campo agregado
+            $table->boolean('estado')->default(true);    // ✅ estado activo/inactivo del nro_item
+            $table->rememberToken();
+            $table->timestamps();
             $table->rememberToken();
             $table->timestamps();
         });

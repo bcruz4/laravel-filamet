@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nro_item',  // ✅ agregado
+        'estado',    // ✅ agregado
     ];
 
     /**
