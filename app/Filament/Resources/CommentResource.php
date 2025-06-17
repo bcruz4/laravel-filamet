@@ -39,14 +39,22 @@ class CommentResource extends Resource
                 Tables\Columns\TextColumn::make('post.title')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('body')
+                    ->label('Comentario')
+                    ->limit(50) // opcional, para evitar que se vea muy largo
+                    ->wrap(),   // opcional, si usas tailwind para permitir salto de línea
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                    //->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Autor')
+                    ->searchable(),
+
             ])
             ->filters([
                 //
