@@ -73,7 +73,7 @@ class PostResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('img_url')
                     ->searchable(),
-                    
+
                 Tables\Columns\TextColumn::make('pdf_url')
                     ->label('Archivo PDF')
                     ->url(fn($record) => asset('storage/' . $record->pdf_url), true)
@@ -106,6 +106,8 @@ class PostResource extends Resource
     {
         return [
             //
+            RelationManagers\CommentsRelationManager::class,
+
         ];
     }
 

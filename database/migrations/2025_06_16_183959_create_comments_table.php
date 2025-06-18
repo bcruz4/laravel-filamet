@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id'); // cada comentario vinculado a un post
             $table->foreign('post_id')->references('id')->on('posts');
+            $table->
             $table->text('body');
             $table->timestamps();
         });
