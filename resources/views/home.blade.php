@@ -14,8 +14,8 @@
             --text-color: #111827;
             --muted-text: #6b7280;
             --border-color: #e5e7eb;
-            --orange-accent: #fd8a27;
-            --blue-dark: #1976d2;
+            --orange-accent: #6366f1;
+            --blue-dark: #2f4559;
         }
 
         * {
@@ -139,7 +139,7 @@
         }
 
         .download-btn:hover {
-            background-color: #e67d22;
+            background-color: #6b7280;
         }
 
         .divider {
@@ -244,9 +244,14 @@
             <div class="document-content">
                 <h6 class="document-title">{{ $post->title }}</h6>
                 <p class="document-text">
-                    {{ Str::limit(strip_tags($post->body), 200) }}
-                    <br><br>
-                    <a href="#">Leer más</a>
+                    {{ Str::limit(strip_tags($post->body), 500) }}
+                    <div class="content">
+                    @if($post->pdf_url)
+                        <a href="{{ asset('storage/' . $post->pdf_url) }}" target="_blank">Descargar Archivo</a>
+                    @else
+                        <a href="#">Leer más</a>
+                    @endif
+                </div>
                 </p>
             </div>
         </div>
