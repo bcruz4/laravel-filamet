@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio | Mi CMS</title>
+    <title>Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -12,6 +12,7 @@
             --bg-color: #ffffff;
             --accent-color: #6366f1;
             --text-color: #111827;
+            --text-color-button: #ffffff;
             --muted-text: #6b7280;
             --border-color: #e5e7eb;
             --orange-accent: #6366f1;
@@ -61,18 +62,25 @@
 
         main {
             padding: 2rem;
-            max-width: 960px;
+            max-width: 1200px; /* Aumentado para dos columnas */
             margin: 0 auto;
         }
 
-        /* Nuevo estilo para las cards */
+        /* Nuevo contenedor de dos columnas */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Ajustes para las cards */
         .document-card {
             background: white;
             border-radius: 8px;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-            margin-bottom: 2rem;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             border: 1px solid var(--border-color);
+            height: 100%;
         }
 
         .document-header {
@@ -131,11 +139,16 @@
             right: 13px;
             padding: 8px 10px;
             background-color: var(--orange-accent);
-            color: white;
+            color: white !important;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
+        }
+
+        .download-btn a {
+            color: white !important;
+            text-decoration: none;
         }
 
         .download-btn:hover {
@@ -182,11 +195,17 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Responsive: una columna en móviles */
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
-
     <header>
         <h1>Ministerio de Salud y Deportes</h1>
         <nav>
@@ -199,71 +218,54 @@
         </nav>
     </header>
 
-<main>
-    <div class="document-card">
-        <div class="document-header">
-            <div style="height: 62px;">
-                <div class="date-container">
-                    <p class="date-month">Junio</p>
-                    <p class="date-day">12</p>
-                    <p class="date-year">2025</p>
-                </div>
-                <p class="document-type">Circular</p>
-            </div>
-            <button class="download-btn">
-                Descargar&nbsp;<i class="fas fa-download" style="font-size: 16px;"></i>
-            </button>
-        </div>
-        <hr class="divider">
-        <div class="document-content">
-            <h6 class="document-title">SOLICITUD DE REMISIÓN DE INFORMACIÓN SOBRE REEMBOLSOS ADEUDADOS Y RESULTADOS DE LA CONCILIACIÓN CON LA CAJA NACIONAL DE SALUD (CNS)</h6>
-            <p class="document-text">
-                Conforme a la reunión programada entre el Ministerio de Educación y representantes de la Caja Nacional de Salud (CNS), las Direcciones Departamentales de Educación (DDE’s) deberán remitir informe consolidado y debidamente detallado sobre los reembolsos económicos adeudados por la CNS, correspondientes al periodo 2018 al 2024, especificando montos, fechas y cualquier otra información relevante que respalde el estado actual de dichos reembolsos.
-                <br><br>
-                <a href="https://sisep.minedu.gob.bo/strapi/strapi-portal/uploads/CI_UGPSEP_SI_18_REEM_CNS_25_5f376aedea.pdf" target="_blank">Descargar Circular</a>
-            </p>
-        </div>
-    </div>
-
-    @forelse($posts as $post)
-        <div class="document-card">
-            <div class="document-header">
-                <div style="height: 62px;">
-                    <div class="date-container">
-                        <p class="date-month">{{ $post->created_at->format('M') }}</p>
-                        <p class="date-day">{{ $post->created_at->format('d') }}</p>
-                        <p class="date-year">{{ $post->created_at->format('Y') }}</p>
+    <main>
+        <div class="posts-grid">
+            @forelse($posts as $post)
+            <div class="document-card">
+                <div class="document-header">
+                    <div style="height: 62px;">
+                        <div class="date-container">
+                            <p class="date-month">{{ $post->created_at->format('M') }}</p>
+                            <p class="date-day">{{ $post->created_at->format('d') }}</p>
+                            <p class="date-year">{{ $post->created_at->format('Y') }}</p>
+                        </div>
+                        <p class="document-type">Instructivo</p>
                     </div>
-                    <p class="document-type">Publicación</p>
+                    <button class="download-btn">
+                        @if($post->pdf_url)
+                        <a href="{{ asset('storage/' . $post->pdf_url) }}" target="_blank">
+                            Descargar&nbsp;<i class="fas fa-download" style="font-size: 16px;"></i>
+                        </a>
+                        @else
+                        <a href="#">
+                            Leer más&nbsp;<i class="fas fa-info-circle" style="font-size: 16px;"></i>
+                        </a>
+                        @endif
+                    </button>
                 </div>
-                <button class="download-btn">
-                    Descargar&nbsp;<i class="fas fa-download" style="font-size: 16px;"></i>
-                </button>
-            </div>
-            <hr class="divider">
-            <div class="document-content">
-                <h6 class="document-title">{{ $post->title }}</h6>
-                <p class="document-text">
-                    {{ Str::limit(strip_tags($post->body), 500) }}
+                <hr class="divider">
+                <div class="document-content">
+                    <h6 class="document-title">{{ $post->title }}</h6>
+                    <p class="document-text">
+                        {{ Str::limit(strip_tags($post->body), 500) }}
                     <div class="content">
-                    @if($post->pdf_url)
-                        <a href="{{ asset('storage/' . $post->pdf_url) }}" target="_blank">Descargar Archivo</a>
-                    @else
+                        @if($post->pdf_url)
+                        <a href="{{ asset('storage/' . $post->pdf_url) }}" target="_blank"></a>
+                        @else
                         <a href="#">Leer más</a>
-                    @endif
+                        @endif
+                    </div>
+                    </p>
                 </div>
-                </p>
             </div>
+            @empty
+            <p>No hay publicaciones disponibles por el momento.</p>
+            @endforelse
         </div>
-    @empty
-        <p>No hay publicaciones disponibles por el momento.</p>
-    @endforelse
-</main>
+    </main>
 
     <footer>
-        &copy; {{ date('Y') }} Ministerio de Salud · Desarrollado con Laravel & Filament
+        &copy; {{ date('Y') }} Ministerio de Salud y Deportes
     </footer>
-
 </body>
-
 </html>
