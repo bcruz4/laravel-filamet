@@ -1,12 +1,12 @@
 /* /var/www/html/filament/resources/css/home.css */
 :root {
     --bg-color: #ffffff;
-    --accent-color: #6366f1;
+    --accent-color: #00445B;
     --text-color: #111827;
     --text-color-button: #ffffff;
     --muted-text: #6b7280;
     --border-color: #e5e7eb;
-    --orange-accent: #6366f1;
+    --orange-accent: #00445B;
     --blue-dark: #2f4559;
 }
 
@@ -16,7 +16,7 @@
 
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
 }

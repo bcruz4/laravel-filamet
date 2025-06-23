@@ -15,8 +15,8 @@
         <nav>
             <div class="navbar">
                 <a href="/publicaciones">Publicaciones</a>
-                <a href="/videos">Videos</a>
-                <a href="/organigrama">Organigrama</a>
+                <!-- <a href="/videos">Videos</a>
+                <a href="/organigrama">Organigrama</a> -->
                 <a href="/dashboard">Login</a>
             </div>
         </nav>
