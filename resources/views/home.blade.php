@@ -31,8 +31,9 @@
                 <div class="col-md-7 d-none d-md-block">
                     <nav>
                         <ul class="main-menu">
-                            <li class="active"><a href="/">Inicio</a></li>
-                            <li><a href="/publicaciones">Publicaciones</a></li>
+                            <li><a href="/inicio">Inicio</a></li>
+                            <li class="active"><a href="/">Publicaciones</a></li>
+                            <li><a href="/publicaciones">Organigrama</a></li>
                             <li><a href="/dashboard">Acceso</a></li>
                         </ul>
                     </nav>
